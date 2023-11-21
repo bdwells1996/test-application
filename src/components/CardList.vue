@@ -7,10 +7,7 @@
                     class="cards-container__item__title"
                     :class="`cards-container__item__title--${card.selectedColor}`"
                 >
-                    <img
-                        src="../assets/greenspark-logo.svg"
-                        class="cards-container__item__title__logo"
-                    />
+                    <GreenSparkLogo class="cards-container__item__title__logo" />
                     <div class="cards-container__item__title__content">
                         <p class="cards-container__item__title__tagline">
                             This product {{ card.action }}
@@ -121,6 +118,7 @@
     display: grid;
     border-top: 2px solid #b0b0b0;
     padding-top: 32px;
+    row-gap: 36px;
 
     @media (min-width: 768px) {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -434,9 +432,11 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, watchEffect } from 'vue'
+import GreenSparkLogo from './GreenSparkLogo.vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
+    components: { GreenSparkLogo },
     data() {
         return {
             hoveredCard: null
@@ -469,7 +469,6 @@ export default defineComponent({
         const colorOptions = ['blue', 'green', 'beige', 'white', 'black']
 
         const selectColor = (card, color) => {
-            card.selectedColor = color
             store.dispatch('updateCardColor', { cardId: card.id, selectedColor: color })
         }
 
