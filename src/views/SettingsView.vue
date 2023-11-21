@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import CardList from '@/components/CardList.vue' // Adjust the path accordingly
+import CardList from '@/components/CardList/CardList.vue' // Adjust the path accordingly
 
 export default defineComponent({
     components: {

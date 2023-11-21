@@ -29,8 +29,6 @@ npm run lint
 
 This project aims to provide users with an optional card that can be set on the product displayed on the home page. There are options to choose between 3 potential environmental benefits, with their respective customisations. The information will then be visible on the home page. VueX is used to create a store to get/set the card states.
 
-## Component structure
-
 ## Style structure
 
 The component's styles are written in SCSS and organized based on the BEM (Block, Element, Modifier) methodology. Key style components include:
