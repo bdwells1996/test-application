@@ -48,10 +48,34 @@ cards-container**item\_\_active: Styles for the activation toggle sec
 
 The component logic is written in TypeScript using the Composition API. Key features and methods include:
 
-data: Contains a hoveredCard variable to track the currently hovered card.
-methods: Includes a setHoveredCard method to update the hovered card state.
-setup function: Utilizes the Vue 3 Composition API to manage component logic.
+**data**: Contains a hoveredCard variable to track the currently hovered card.
+**methods**: Includes a setHoveredCard method to update the hovered card state.
+**setup function**: Utilizes the Vue 3 Composition API to manage component logic.
 Uses Vuex (useStore) for state management.
 Defines reactive variables such as cards, activeCard, and colorOptions.
 Utilizes lifecycle hooks (onMounted, watchEffect) for initialization and fetching data.
 Provides methods for color selection (selectColor), toggling card activation (toggleActive), and checking if a card is active (isActiveRadio).
+
+## Vuex Store (cards.ts)
+
+The component relies on a Vuex store to manage the state of product cards. The store is defined in the `store/modules/cards.ts` file. It includes the following features:
+
+-   **Card Interface**: Defines the structure of a card object with properties such as `id`, `title`, `color`, `active`, and `linked`.
+
+-   **CardsState Interface**: Defines the structure of the Vuex store state, specifically the `cards` array.
+
+-   **Mutations**:
+
+    -   **setCards**: Sets the entire array of cards in the store state.
+    -   **updateCardColor**: Updates the color of a specific card based on the provided `cardId` and `selectedColor`.
+    -   **updateCardActive**: Sets the `active` property of a specific card based on the provided `cardId` and `isActive` value.
+
+-   **Actions**:
+
+    -   **fetchCards**: Asynchronously fetches the list of product cards from a mock API using Axios. The fetched cards are stored in the state only if the state is initially empty.
+    -   **updateCardColor**: Commits the `updateCardColor` mutation. Additional logic, such as API calls, can be added here.
+    -   **updateCardActive**: Commits the `updateCardActive` mutation. Additional logic, such as API calls, can be added here.
+
+-   **Getters**:
+    -   **cards**: Retrieves the entire array of cards from the state.
+    -   **activeCards**: Retrieves an array of only the active cards.
