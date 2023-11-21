@@ -153,7 +153,7 @@ export default defineComponent({
         const toggleActive = (cardId: string) => {
             activeCard.value = cardId
             store.dispatch('updateCardActive', { cardId, isActive: true })
-            store.commit('setCards', [...store.state.cards]) // Update the entire cards array
+            store.commit('setCards', [...store.state.cards])
             console.log(activeCard.value)
             console.log('activeCard after toggle:', activeCard.value)
         }
