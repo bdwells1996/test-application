@@ -118,7 +118,7 @@
 
                     &:checked {
                         &::before {
-                            background-image: url('../assets/checkbox-checked.svg');
+                            background-image: url('@/assets/checkbox-checked.svg');
                             background-repeat: no-repeat;
                             background-position: center;
                             background-color: #3b755f;
@@ -295,11 +295,19 @@
                 height: 20px;
                 width: 40px;
                 position: relative;
+                transition: border 200ms ease;
+
+                &:hover {
+                    &::before {
+                        outline: 6px solid rgba(175, 198, 189, 0.5);
+                    }
+                }
 
                 &:checked {
                     &::before {
                         transform: translateX(100%);
                         border: 1px solid #3b755f;
+                        outline: none;
                     }
 
                     &::after {
@@ -328,7 +336,10 @@
                     position: absolute;
                     border-radius: 100%;
                     transform: translateX(0);
-                    transition: transform 200ms ease;
+                    outline: 6px solid transparent;
+                    transition:
+                        outline 200ms ease,
+                        transform 200ms ease;
                     cursor: pointer;
                 }
             }

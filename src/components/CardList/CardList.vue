@@ -97,27 +97,37 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watchEffect } from 'vue'
+import { defineComponent, ref, onMounted, watchEffect, reactive } from 'vue'
 import GreenSparkLogo from '@/components/GreenSparkLogo.vue'
 import { useStore } from 'vuex'
 import './CardList.scss'
+
+interface Card {
+    id: string
+    title: string
+    color: string
+    action: string
+    amount: number
+    type: string
+    selectedColor: string
+}
 
 export default defineComponent({
     components: { GreenSparkLogo },
     data() {
         return {
-            hoveredCard: null
+            hoveredCard: null as string | null
         }
     },
     methods: {
-        setHoveredCard(cardId, isHovered) {
+        setHoveredCard(cardId: string, isHovered: boolean) {
             this.hoveredCard = isHovered ? cardId : null
         }
     },
     setup() {
         const store = useStore()
-        const cards = ref([])
-        const activeCard = ref(null)
+        const cards = ref<Card[]>([])
+        const activeCard = ref<string | null>(null)
 
         watchEffect(() => {
             cards.value = store.getters.cards
@@ -135,17 +145,20 @@ export default defineComponent({
 
         const colorOptions = ['blue', 'green', 'beige', 'white', 'black']
 
-        const selectColor = (card, color) => {
+        const selectColor = (card: Card, color: string) => {
             store.dispatch('updateCardColor', { cardId: card.id, selectedColor: color })
+            store.commit('setCards', [...store.state.cards])
         }
 
-        const toggleActive = (cardId) => {
+        const toggleActive = (cardId: string) => {
             activeCard.value = cardId
             store.dispatch('updateCardActive', { cardId, isActive: true })
+            store.commit('setCards', [...store.state.cards]) // Update the entire cards array
             console.log(activeCard.value)
+            console.log('activeCard after toggle:', activeCard.value)
         }
 
-        const isActiveRadio = (cardId) => {
+        const isActiveRadio = (cardId: string) => {
             return activeCard.value === cardId
         }
 

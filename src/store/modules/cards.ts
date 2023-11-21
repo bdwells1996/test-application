@@ -17,11 +17,13 @@ interface CardsState {
 
 export default createStore({
     state: (): CardsState => ({
-        cards: []
+        cards: JSON.parse(localStorage.getItem('cards')) || []
     }),
     mutations: {
         setCards(state: CardsState, cards: Card[]) {
             state.cards = cards
+            localStorage.setItem('cards', JSON.stringify(cards))
+            console.log('setAllCards mutation called. Updated cards:', cards)
         },
         updateCardColor(state: CardsState, { cardId, selectedColor }) {
             const card = state.cards.find((c) => c.id === cardId)
@@ -51,11 +53,9 @@ export default createStore({
             }
         },
         updateCardColor({ commit }, payload) {
-            // Additional logic can be added here, such as API calls
             commit('updateCardColor', payload)
         },
         updateCardActive({ commit }, payload) {
-            // Additional logic can be added here, such as API calls
             commit('updateCardActive', payload)
         }
     },
