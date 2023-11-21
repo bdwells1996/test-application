@@ -86,11 +86,10 @@
                     <input
                         type="radio"
                         class="cards-container__item__active__toggle"
-                        v-model="activeCard"
-                        :value="card.id"
+                        :checked="isActiveRadio(card.id)"
                         @change="toggleActive(card.id)"
                         name="active-card"
-                        id="active-card"
+                        :id="'active-card-' + card.id"
                     />
                 </div>
             </div>
@@ -394,8 +393,12 @@
 
                 &:checked {
                     &::before {
-                        left: initial;
-                        right: 0;
+                        transform: translateX(100%);
+                        border: 1px solid #3b755f;
+                    }
+
+                    &::after {
+                        background: #3b755f;
                     }
                 }
 
@@ -419,6 +422,9 @@
                     width: 20px;
                     position: absolute;
                     border-radius: 100%;
+                    transform: translateX(0);
+                    transition: transform 200ms ease;
+                    cursor: pointer;
                 }
             }
         }
@@ -457,6 +463,7 @@ export default defineComponent({
             } catch (error) {
                 console.error('Error fetching cards:', error)
             }
+            console.log('Active:', activeCard.value)
         })
 
         const colorOptions = ['blue', 'green', 'beige', 'white', 'black']
@@ -467,14 +474,13 @@ export default defineComponent({
         }
 
         const toggleActive = (cardId) => {
-            if (activeCard.value === cardId) {
-                // Unselect the active card
-                activeCard.value = null
-            } else {
-                // Select a new active card
-                activeCard.value = cardId
-                store.dispatch('updateCardActive', { cardId, isActive: true })
-            }
+            activeCard.value = cardId
+            store.dispatch('updateCardActive', { cardId, isActive: true })
+            console.log(activeCard.value)
+        }
+
+        const isActiveRadio = (cardId) => {
+            return activeCard.value === cardId
         }
 
         return {
@@ -482,6 +488,7 @@ export default defineComponent({
             colorOptions,
             selectColor,
             toggleActive,
+            isActiveRadio,
             activeCard
         }
     }

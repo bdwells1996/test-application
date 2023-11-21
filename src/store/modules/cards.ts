@@ -26,7 +26,7 @@ export default createStore({
         updateCardColor(state: CardsState, { cardId, selectedColor }) {
             const card = state.cards.find((c) => c.id === cardId)
             if (card) {
-                card.selectedColor = selectedColor
+                card.color = selectedColor
             }
         },
         updateCardActive(state, { cardId, isActive }) {
@@ -36,12 +36,16 @@ export default createStore({
         }
     },
     actions: {
-        async fetchCards({ commit }) {
+        async fetchCards({ commit, state }) {
             try {
-                const response = await axios.get('https://api.mocki.io/v2/016d11e8/product-widgets')
-                const cards = response.data
-                commit('setCards', cards)
-                console.log('Cards in fetchCards action:', cards)
+                if (state.cards.length === 0) {
+                    const response = await axios.get(
+                        'https://api.mocki.io/v2/016d11e8/product-widgets'
+                    )
+                    const cards = response.data
+                    commit('setCards', cards)
+                    console.log('Cards in fetchCards action:', cards)
+                }
             } catch (error) {
                 console.error('Error fetching cards:', error)
             }
@@ -56,6 +60,8 @@ export default createStore({
         }
     },
     getters: {
-        cards: (state: CardsState) => state.cards
+        cards: (state: CardsState) => state.cards,
+        // Getter to get only active cards
+        activeCards: (state: CardsState) => state.cards.filter((card) => card.active)
     }
 })

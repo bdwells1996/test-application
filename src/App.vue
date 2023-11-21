@@ -11,8 +11,4 @@ import { RouterLink, RouterView } from 'vue-router'
     <RouterView />
 </template>
 
-<style scoped lang="scss">
-body * {
-    font-family:;
-}
-</style>
+<style scoped lang="scss"></style>
