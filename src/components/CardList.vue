@@ -109,6 +109,10 @@
         0px 27.22222px 44.50926px 0px rgba(0, 0, 0, 0.04),
         0px 42px 76px 0px rgba(0, 0, 0, 0.05);
 
+    @media (max-width: 768px) {
+        padding: 36px 28px;
+    }
+
     &__title {
         margin: 0 0 14px 0;
     }
